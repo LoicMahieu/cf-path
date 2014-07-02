@@ -1,3 +1,7 @@
+<!---
+  Based on https://github.com/joyent/node/blob/b9bec2031e5f44f47cf01c3ec466ab8cddfa94f6/test/simple/test-path.js
+--->
+
 <cffunction name="printResults">
   <cfoutput>
   <table>

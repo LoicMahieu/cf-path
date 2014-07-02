@@ -3,6 +3,8 @@
  */
 component {
 
+  // Based on https://github.com/joyent/node/blob/b9bec2031e5f44f47cf01c3ec466ab8cddfa94f6/lib/path.js
+
   public string function basename(required string path, string ext = '') {
     var f = splitPath(path)[3];
 
