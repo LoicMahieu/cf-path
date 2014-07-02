@@ -120,6 +120,32 @@ component {
     return '.';
   }
 
+  public string function relative(required string from, required string to) {
+    from = resolve(from);
+    to = resolve(to);
+
+    var fromParts = trimArray(listToArray(from, '/'));
+    var toParts = trimArray(listToArray(to, '/'));
+
+    var length = min(arrayLen(fromParts), arrayLen(toParts));
+    var samePartsLength = length;
+    for (var i = 1; i <= length; i++) {
+      if (fromParts[i] != toParts[i]) {
+        samePartsLength = i - 1;
+        break;
+      }
+    }
+
+    var outputParts = [];
+    for (var i = samePartsLength; i < arrayLen(fromParts); i++) {
+      outputParts.add('..');
+    }
+
+    outputParts.addAll(_arraySlice(toParts, samePartsLength + 1));
+
+    return arrayToList(outputParts, '/');
+  }
+
 
 
 
@@ -193,34 +219,19 @@ component {
     }
 
     if (start > end) return [];
-    return arraySlice(arr, start, end - start + 1);
+    return _arraySlice(arr, start, end - start + 1);
   }
 
-  /**
-   * Slices an array.
-   * 
-   * @param ary      The array to slice. (Required)
-   * @param start      The index to start with. Defaults to 1. (Optional)
-   * @param finish      The index to end with. Defaults to the end of the array. (Optional)
-   * @return Returns an array. 
-   * @author Darrell Maples (drmaples@gmail.com) 
-   * @version 1, July 13, 2005 
-   */
-  private array function arraySlice(required array ary) {
+  private array function _arraySlice(required array arr) {
       var start = 1;
-      var finish = arrayLen(ary);
-      var slice = arrayNew(1);
-      var j = 1;
+      var end = arrayLen(arr);
+      var slice = [];
 
-      if (len(arguments[2])) { start = arguments[2]; };
-      if (len(arguments[3])) { finish = arguments[3]; };
+      if (len(arguments[2])) start = arguments[2];
+      if (len(arguments[3])) end = arguments[3];
 
-      if (start <= 0) {
-        return slice;
-      }
-
-      for (j=start; j LTE finish; j=j+1) {
-          arrayAppend(slice, ary[j]);
+      for (var i = start; i <= end; i++) {
+          arrayAppend(slice, arr[i]);
       }
       
       return slice;

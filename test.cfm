@@ -223,6 +223,26 @@
 
 
 
+  // path.relative tests
+  relativeTests =
+      // arguments                    result
+      [['/var/lib', '/var', '..'],
+       ['/var/lib', '/bin', '../../bin'],
+       ['/var/lib', '/var/lib', ''],
+       ['/var/lib', '/var/apache', '../apache'],
+       ['/var/', '/var/lib', 'lib'],
+       ['/', '/var/lib', 'var/lib']];
+
+  for (i = 1; i <= arrayLen(relativeTests); i++) {
+    test = relativeTests[i];
+    isEqual(path.relative(test[1], test[2]), test[3]);
+  }
+
+
+
+
+
+
 
 
 
